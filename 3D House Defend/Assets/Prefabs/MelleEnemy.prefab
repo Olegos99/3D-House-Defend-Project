@@ -409,9 +409,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lookRadius: 10
-  AttackRadius: 1.5
+  AttackRadius: 2
   AttackingNow: 0
   MainTarget: {fileID: 0}
+  m_MainTarget: {fileID: 0}
   Anim: {fileID: 1137247605789209604}
   Anima: {fileID: 5822423568206588630}
   AttackAnimation: {fileID: 7400000, guid: 4b3109dc99cbe734a8f9400b87897146, type: 2}
@@ -429,7 +430,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHealth: 9
   CurrentHealth: 0
-  EnemyDamage: 2
+  EnemyDamage: 1
   Weapon: {fileID: 7768625130608900586}
 --- !u!114 &7269374233176349410
 MonoBehaviour:

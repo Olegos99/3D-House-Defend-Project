@@ -2477,5 +2477,20 @@ PrefabInstance:
       propertyPath: Hited
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4768930658175286608, guid: 883178825e3216e4885a876a72fa8063,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4768930658467247569, guid: 883178825e3216e4885a876a72fa8063,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4768930658471875152, guid: 883178825e3216e4885a876a72fa8063,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 883178825e3216e4885a876a72fa8063, type: 3}

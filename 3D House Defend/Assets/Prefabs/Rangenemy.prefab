@@ -413,7 +413,7 @@ MonoBehaviour:
   TimeBetweenShoots: 3
   ShootingSpeed: 100
   BulletLifeTime: 3
-  ShootingDamage: 1
+  ShootingDamage: 2
 --- !u!114 &3119700649323128545
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -428,6 +428,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHealth: 4
   CurrentHealth: 0
+  EnemyDamage: 2
+  Weapon: {fileID: 0}
 --- !u!114 &7269374233176349410
 MonoBehaviour:
   m_ObjectHideFlags: 0
