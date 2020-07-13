@@ -19,9 +19,12 @@ public class PlayerStats : MonoBehaviour
 
     public GameObject CurrentWeapon;
 
-    public int CurrentHealth;
-    public int CurrentArmor;
-    public int CurrentEnergy;
+    [SerializeField]
+    private int CurrentHealth;
+    [SerializeField]
+    private int CurrentArmor;
+    [SerializeField]
+    private int CurrentEnergy;
 
     public int Realdamage;
 
@@ -47,6 +50,10 @@ public class PlayerStats : MonoBehaviour
         if (ActualDamageRecive > 0)
         {
             CurrentHealth -= ActualDamageRecive;
+            if(CurrentHealth <= 0)
+            {
+                Death();
+            }
         }
         else
             return;
@@ -54,9 +61,13 @@ public class PlayerStats : MonoBehaviour
 
     public void RestoreHealth(int Amount)
     {
-        if (CurrentHealth < MaxHealth)
+        if (CurrentHealth < MaxHealth )
         {
             CurrentHealth += Amount;
+            if(CurrentHealth > MaxHealth)
+            {
+                CurrentHealth = MaxHealth;
+            }
         }
         else
             return;
@@ -67,12 +78,21 @@ public class PlayerStats : MonoBehaviour
         if (CurrentEnergy < MaxEnergy)
         {
             CurrentEnergy += Amount;
+            if (CurrentEnergy > MaxEnergy)
+            {
+                CurrentEnergy = MaxEnergy;
+            }
         }
         else
             return;
     }
 
     public void ChangeWeapon()
+    {
+
+    }
+
+    private void Death()
     {
 
     }
