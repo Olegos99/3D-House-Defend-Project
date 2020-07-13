@@ -4,16 +4,27 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
-    [Range(1,10)]
+    [Range(1, 10)]
     public int WeaponDamage = 1;
 
-    bool Hited = false;
+    public bool Hited = false;
 
-    Animator Anim;
+    public Animator Anim;
+
+    public float attackTime;
+
 
     private void Start()
     {
         Anim = GetComponentInParent<Animator>();
+        AnimationClip[] clips = Anim.runtimeAnimatorController.animationClips;
+        foreach (AnimationClip clip in clips)
+        {
+            if (clip.name == "PlayerAttack")
+            {
+                attackTime = clip.length;
+            }
+        }
     }
 
     public void OnCollisionEnter(Collision collision)
@@ -23,20 +34,30 @@ public class Weapon : MonoBehaviour
             if (Anim.GetCurrentAnimatorStateInfo(0).IsTag("Attacking") && !Hited)//this way after hitting one enemy weapon till the end of animation will no more deal damage
             {
                 Hited = true;
+                StartCoroutine(WhaitTillNextDamageDelivery(attackTime));
             }
             Debug.Log("Enemy hitted");
-            this.GetComponentInParent<PlayerAttacks>().DeliverDamage(collision.gameObject);
+            this.GetComponentInParent<PlayerAttacks>().DeliverDamage(collision.gameObject);         
         }
     }
 
 
-    private void Update()
+    public void Update()
     {
-        if(!Anim.GetCurrentAnimatorStateInfo(0).IsTag("Attacking") && Hited)
-        {
-            Hited = false;
-        }
+        ////if(Anim.GetCurrentAnimatorStateInfo(0).IsTag("Attacking") && Hited)
+        //if (Anim != null)
+        //{
+        //    if (!Anim.GetCurrentAnimatorStateInfo(0).IsTag("Attacking"))
+        //    {
+        //        Hited = false;
+        //    }
+        //}
+    }
 
+    public IEnumerator WhaitTillNextDamageDelivery(float attackTime)
+    {
+        yield return new WaitForSeconds(attackTime);
+        Hited = false;
     }
 
 }

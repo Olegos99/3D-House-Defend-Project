@@ -8,10 +8,15 @@ public class EnemyStats : MonoBehaviour
     public int MaxHealth;
 
     public int CurrentHealth;
+    [Range(1, 10)]
+    public int EnemyDamage = 2;
+
+    public GameObject Weapon;
 
     public void Start()
     {
         CurrentHealth = MaxHealth;
+       // Weapon.GetComponentInChildren<EnemyWeapon>().WeaponDamage = EnemyDamage;
     }
 
     public void ResiveDamage(int Amount)
