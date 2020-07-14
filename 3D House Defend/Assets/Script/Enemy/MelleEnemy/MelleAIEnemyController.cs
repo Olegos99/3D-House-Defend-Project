@@ -5,89 +5,100 @@ using UnityEngine.AI;
 
 public class MelleAIEnemyController : MonoBehaviour
 {
+    public int AttackDamage = 2;
+    public float AttackRate = 0.5f;
+
     public float lookRadius = 10f;
     public float AttackRadius = 1.5f;
 
     public bool AttackingNow = false;
 
-    Transform SecondaryTarget;
+
     NavMeshAgent agent;
 
-    public Transform MainTarget;
-    public GameObject m_MainTarget;
-
+    private Transform PlayerTransform;
+    private Transform HouseTransform;
     private Transform CurrentTarget;
 
-    public Animator Anim;
-    public Animation Anima;
-    public AnimationClip AttackAnimation;
+    public Transform AttackPoint;
 
+    public float AttackRange = 0.5f;
+
+    public Animator Anim;
+
+    private float TimeToNextAttack = 0f;
     // Start is called before the first frame update
     public void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        SecondaryTarget = PlayerManager.instance.Player.transform;
-        MainTarget = House.instance._House.transform;
+        PlayerTransform = PlayerManager.instance.Player.transform;
+        HouseTransform = House.instance._House.transform;
         Anim = GetComponentInChildren<Animator>();
-        Anima = GetComponentInChildren<Animation>();
     }
 
-    public void Awake()
-    {
-        foreach (AnimationState AC in Anima)
-        {
-
-            Debug.Log("searching");
-            if (AC.clip.name == "EnemyAttack")
-            {
-                AttackAnimation = AC.clip;
-            }
-        }
-    }
 
     // Update is called once per frame
     void Update()
     {
-        if (Vector3.Distance(SecondaryTarget.position, transform.position) <= lookRadius) //may be we can add a searching script
+        if (Vector3.Distance(PlayerTransform.position, transform.position) <= lookRadius) //may be we can add a searching script
 
         {
-            CurrentTarget = SecondaryTarget;
+            CurrentTarget = PlayerTransform;
         }
         else
         {
-            CurrentTarget = MainTarget;
+            CurrentTarget = HouseTransform;
         }
 
-        agent.SetDestination(CurrentTarget.position);
-
-        float distance = Vector3.Distance(CurrentTarget.position, transform.position);      
+        float distance = Vector3.Distance(CurrentTarget.position, transform.position);
 
         if (distance <= AttackRadius)
         {
-            if(!AttackingNow)
+            if (Time.time >= TimeToNextAttack)
             {
-                StartCoroutine("Attack");
+                Attack();
+                TimeToNextAttack = Time.time + 1f / AttackRate;
             }
         }
 
+        agent.SetDestination(CurrentTarget.position);
+    }
+
+
+    private void Attack()
+    {
+        Debug.Log("enemy Attacking");
+        Anim.SetTrigger("Attack");
+        Collider[] HitedEnemies = Physics.OverlapSphere(AttackPoint.position, AttackRange);
+        foreach (Collider Enemy in HitedEnemies)
+        {
+            if(Enemy.gameObject.name == "Player")
+            {
+                Enemy.gameObject.GetComponent<PlayerStats>().ResiveDamage(AttackDamage);
+            }
+        }
+        //StartCoroutine("Attacking");
     }
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
+        Gizmos.color = Color.white;
         Gizmos.DrawWireSphere(transform.position, lookRadius);
+        Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, AttackRadius);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(AttackPoint.position, AttackRange);
     }
 
-    public IEnumerator Attack()
-    {
-        Debug.Log("Enemy Attacks");
-        AttackingNow = true;
-        Anim.SetBool("Attacking", true);
-        //yield return new WaitForSeconds(1f);
-        yield return new WaitForSeconds(AttackAnimation.length);//change to 
-        Anim.SetBool("Attacking", false);
+    //public IEnumerator Attack()
+    //{
+    //    Debug.Log("Enemy Attacks");
+    //    AttackingNow = true;
+    //    Anim.SetBool("Attacking", true);
+    //    //yield return new WaitForSeconds(1f);
+    //    yield return new WaitForSeconds(AttackAnimation.length);//change to 
+    //    Anim.SetBool("Attacking", false);
 
-        AttackingNow = false;
-    }
+    //    AttackingNow = false;
+    //}
 }

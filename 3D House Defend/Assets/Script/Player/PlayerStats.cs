@@ -40,7 +40,10 @@ public class PlayerStats : MonoBehaviour
 
     void Update()
     {
-        WeaponDamage = CurrentWeapon.GetComponentInChildren<Weapon>().WeaponDamage;
+        if (CurrentWeapon.GetComponentInChildren<Weapon>())
+        {
+            WeaponDamage = CurrentWeapon.GetComponentInChildren<Weapon>().WeaponDamage;
+        }
         Realdamage = MelleAttackPower + WeaponDamage;
     }
 
