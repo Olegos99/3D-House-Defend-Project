@@ -16,6 +16,8 @@ public class MelleAIEnemyController : MonoBehaviour
     public Transform MainTarget;
     public GameObject m_MainTarget;
 
+    private Transform CurrentTarget;
+
     public Animator Anim;
     public Animation Anima;
     public AnimationClip AttackAnimation;
@@ -46,8 +48,19 @@ public class MelleAIEnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Vector3.Distance(SecondaryTarget.position, transform.position) <= lookRadius) //may be we can add a searching script
 
-        float distance = Vector3.Distance(SecondaryTarget.position, transform.position);      
+        {
+            CurrentTarget = SecondaryTarget;
+        }
+        else
+        {
+            CurrentTarget = MainTarget;
+        }
+
+        agent.SetDestination(CurrentTarget.position);
+
+        float distance = Vector3.Distance(CurrentTarget.position, transform.position);      
 
         if (distance <= AttackRadius)
         {
@@ -57,14 +70,6 @@ public class MelleAIEnemyController : MonoBehaviour
             }
         }
 
-        if (distance <= lookRadius)
-        {
-            agent.SetDestination(SecondaryTarget.position);
-        }
-        else
-        {
-            agent.SetDestination(MainTarget.position);
-        }
     }
 
     private void OnDrawGizmos()

@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public int ThisBulletDamage;
-    public float BulletLifeTime;
+    private int ThisBulletDamage;
+    private float BulletLifeTime = 3;
 
     private void Awake()
     {
         StartCoroutine(DestroyBullet(BulletLifeTime));
     }
+
     public void SetBulletDamage(int Amount)
     {
         ThisBulletDamage = Amount;

@@ -28,3 +28,11 @@ public class MouseLook : MonoBehaviour
         PlayerBody.Rotate(Vector3.up * MouseX);
     }
 }
+/*
+6. Tracking: This camera tracks the doll along a pre-defined line in 3D space.
+It may rotate, speed up or slow down, fall behind or even move ahead of the doll as required but the player has little or no control over its movements.
+Tracking cameras are often used in linear action or platform games like God of War or the Kim Possible DS games.
+
+7. Pushable: Pushable cameras occupy a default position (usually behind the doll) when not controlled, but the player can push them using a second thumb stick or mouse.
+The camera then rotates around the doll.This kind of camera is very common in modern games.Pushable and tracking cameras are often casually grouped as ‘third person’ perspective.
+*/

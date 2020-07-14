@@ -8,11 +8,11 @@ public class RangeAIEnemy : MonoBehaviour
     public float LookRadius = 30f;
     public float ShootRadius = 20f;
 
+    private NavMeshAgent agent;
 
-    Transform SecondaryTarget;
-    NavMeshAgent agent;
-
-    public Transform MainTarget;
+    private Transform PlayerTransform;
+    private Transform HouseTransform;
+    private Transform CurrentTarget;
 
     public GameObject ShootingAmmoType;
 
@@ -37,33 +37,32 @@ public class RangeAIEnemy : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        SecondaryTarget = PlayerManager.instance.Player.transform;
-        MainTarget = House.instance._House.transform;
+        PlayerTransform = PlayerManager.instance.Player.transform;
+        HouseTransform = House.instance._House.transform;
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        float DistanceToPlayer = Vector3.Distance(SecondaryTarget.position, transform.position);
-        float DistanceToMainTarget = Vector3.Distance(MainTarget.position, transform.position);
-
-        if (DistanceToPlayer <= LookRadius)
+        if(Vector3.Distance(PlayerTransform.position, transform.position) <= LookRadius)
         {
-            agent.SetDestination(SecondaryTarget.position);
-            this.transform.LookAt(SecondaryTarget);
-            if(DistanceToPlayer <= ShootRadius)
-            {
-                ShootAtTarget(this.transform, SecondaryTarget);
-            }
-        }
-        else if (DistanceToMainTarget <= ShootRadius)
-        {
-            ShootAtTarget(this.transform, MainTarget);
+            CurrentTarget = PlayerTransform;
         }
         else
         {
-            agent.SetDestination(MainTarget.position);
+            CurrentTarget = HouseTransform;
+        }
+
+        agent.SetDestination(CurrentTarget.position);
+
+        var newRotation = Quaternion.LookRotation( CurrentTarget.position - transform.position, Vector3.forward);
+        newRotation.x = 0.0f;
+        newRotation.z = 0.0f;
+        transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, Time.deltaTime * 5);
+
+        if (Vector3.Distance(CurrentTarget.position, transform.position) <= ShootRadius)
+        {
+            ShootAtTarget(this.transform, CurrentTarget);
         }
 
     }
@@ -74,7 +73,7 @@ public class RangeAIEnemy : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, LookRadius);
     }
 
-    public void ShootAtTarget(Transform From, Transform Target) 
+    private void ShootAtTarget(Transform ShootStartTransform, Transform ShootTargetTransform) 
     {
       
         if (Time.time < NextTimeForShooting)
@@ -82,11 +81,11 @@ public class RangeAIEnemy : MonoBehaviour
         else
         {
             NextTimeForShooting = Time.time + TimeBetweenShoots;
-            Vector3 UpdatedFrom = new Vector3(From.position.x, From.position.y + 2f, From.position.z); // make enemy shoot frome above the head
+            Vector3 UpdatedFrom = new Vector3(ShootStartTransform.position.x, ShootStartTransform.position.y + 2f, ShootStartTransform.position.z); // make enemy shoot frome above the head
             GameObject Bullet = Instantiate(ShootingAmmoType, UpdatedFrom, Quaternion.identity);
             Bullet.GetComponentInChildren<Bullet>().SetBulletDamage(ShootingDamage);
             Bullet.GetComponentInChildren<Bullet>().SetBulletLifeTime(BulletLifeTime);
-            Bullet.GetComponentInChildren<Rigidbody>().AddForce((Target.position - this.transform.position) * ShootingSpeed); //vector to the target * trust
+            Bullet.GetComponentInChildren<Rigidbody>().AddForce((ShootTargetTransform.position - this.transform.position) * ShootingSpeed); //vector to the target * trust
             //StartCoroutine(Bullet.GetComponentInChildren<Bullet>().DestroyBullet(BulletLifeTime));
         }
     }

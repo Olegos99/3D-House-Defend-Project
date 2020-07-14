@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abdffd8d5ee99ed47b144f1a49357ddf, type: 3}
+  m_Name: FirstWeapon
+  m_EditorClassIdentifier: 
+  name: palka
+  WeaponModel: {fileID: 8038980291269683923, guid: 4d288427d57440744b87d4520ee2ef30,
+    type: 3}
+  Damage: 5
+  Cost: 1

@@ -33,7 +33,7 @@ public class HealthBar : MonoBehaviour
     {
 
         canvas.transform.LookAt(PlayerManager.instance.Player.GetComponentInChildren<Camera>().transform);//something is wrong (thery wierd mowment of bar)
-        canvas.transform.rotation = Quaternion.Euler(0f , transform.rotation.y , 0f );
+        canvas.transform.localRotation = Quaternion.Euler(0f , transform.rotation.y , 0f );
 
         if (Owner.tag == "House")
         {
