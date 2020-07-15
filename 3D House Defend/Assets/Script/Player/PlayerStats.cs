@@ -17,8 +17,6 @@ public class PlayerStats : MonoBehaviour
     [Range(0f, 50f)]
     public int Armor;
 
-    public GameObject CurrentWeapon;
-
     [SerializeField]
     private int CurrentHealth;
     [SerializeField]
@@ -26,25 +24,11 @@ public class PlayerStats : MonoBehaviour
     [SerializeField]
     private int CurrentEnergy;
 
-    public int Realdamage;
-
-    int WeaponDamage;
-
     void Start()
     {
         CurrentHealth = MaxHealth;
         CurrentEnergy = MaxEnergy;
         CurrentArmor = Armor;
-    }
-
-
-    void Update()
-    {
-        if (CurrentWeapon.GetComponentInChildren<Weapon>())
-        {
-            WeaponDamage = CurrentWeapon.GetComponentInChildren<Weapon>().WeaponDamage;
-        }
-        Realdamage = MelleAttackPower + WeaponDamage;
     }
 
     public void ResiveDamage(int Amount)
@@ -62,7 +46,7 @@ public class PlayerStats : MonoBehaviour
             return;
     }
 
-    public void RestoreHealth(int Amount)
+    private void RestoreHealth(int Amount)
     {
         if (CurrentHealth < MaxHealth )
         {
@@ -76,7 +60,7 @@ public class PlayerStats : MonoBehaviour
             return;
     }
 
-    public void RestoreEnergy(int Amount)
+    private void RestoreEnergy(int Amount)
     {
         if (CurrentEnergy < MaxEnergy)
         {
@@ -88,11 +72,6 @@ public class PlayerStats : MonoBehaviour
         }
         else
             return;
-    }
-
-    public void ChangeWeapon()
-    {
-
     }
 
     private void Death()

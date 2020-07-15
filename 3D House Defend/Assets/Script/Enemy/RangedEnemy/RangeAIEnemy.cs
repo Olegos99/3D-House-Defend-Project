@@ -38,7 +38,7 @@ public class RangeAIEnemy : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         PlayerTransform = PlayerManager.instance.Player.transform;
-        HouseTransform = House.instance._House.transform;
+        HouseTransform = House.instance._HouseGameObject.transform;
     }
 
     // Update is called once per frame

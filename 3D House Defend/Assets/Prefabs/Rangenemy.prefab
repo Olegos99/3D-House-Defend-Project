@@ -248,12 +248,12 @@ GameObject:
   - component: {fileID: 1241341595806368280}
   - component: {fileID: 1241341595806368281}
   - component: {fileID: 1241341595806368282}
-  - component: {fileID: 1241341595806368283}
   - component: {fileID: 1241341595806368284}
   - component: {fileID: 4234954011389209765}
   - component: {fileID: 3119700649323128545}
   - component: {fileID: 7269374233176349410}
   - component: {fileID: 2294875642067813835}
+  - component: {fileID: 2132374460696242317}
   m_Layer: 11
   m_Name: Rangenemy
   m_TagString: Enemy
@@ -324,19 +324,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &1241341595806368283
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1241341595806368286}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.2778549, y: 1, z: 1.8360018}
-  m_Center: {x: 0.032024384, y: 0, z: 0.024589792}
 --- !u!195 &1241341595806368284
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -424,6 +411,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &2132374460696242317
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1241341595806368286}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3442874308367960609
 GameObject:
   m_ObjectHideFlags: 0

@@ -15,11 +15,19 @@ public class PlayerAttacks : MonoBehaviour
     public float AttackRate = 0.5f;
     float TimeToNextAttack = 0f;
 
+    public WeaponScriptableObj[] WeaponsInInventory;
+    public WeaponScriptableObj CurrentWeapon;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        if (WeaponsInInventory[0] != null)
+        {
+            CurrentWeapon = WeaponsInInventory[0];
+        }
+        else
+            CurrentWeapon = null;
         Anim = GetComponentInChildren<Animator>();
     }
 
@@ -31,7 +39,7 @@ public class PlayerAttacks : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 Attack();
-                TimeToNextAttack = Time.time + 1f / AttackRate;
+                TimeToNextAttack = Time.time + 1f /*/ AttackRate*/;
             }
         }
         m_CurrentClipInfo = this.Anim.GetCurrentAnimatorClipInfo(0);
@@ -46,7 +54,7 @@ public class PlayerAttacks : MonoBehaviour
         foreach (Collider Enemy in HitedEnemies)
         {
             Debug.Log("Hited" + Enemy.name);
-            DeliverDamage(Enemy.gameObject);
+            DeliverMelleDamage(Enemy.gameObject);
         }
         //StartCoroutine("Attacking");
 
@@ -73,10 +81,11 @@ public class PlayerAttacks : MonoBehaviour
     //    yield return new WaitForSeconds(0.1f);
     //}
 
-    public void DeliverDamage(GameObject target)
+    public void DeliverMelleDamage(GameObject target)
     {
-        int ActualDamage = GetComponentInParent<PlayerStats>().Realdamage;
+        int ActualDamage = GetComponentInParent<PlayerStats>().MelleAttackPower + CurrentWeapon.Damage;
         target.GetComponentInParent<EnemyStats>().ResiveDamage(ActualDamage);
+        Debug.Log("Delivered " + ActualDamage + " damage to " + target.name);
     }
 
     private void OnDrawGizmos() //draw helpful thing in the Sceene

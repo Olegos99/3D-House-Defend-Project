@@ -10,11 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: abdffd8d5ee99ed47b144f1a49357ddf, type: 3}
-  m_Name: FirstWeapon
+  m_Name: 2weapon
   m_EditorClassIdentifier: 
-  name: palka
-  WeaponModel: {fileID: 5381961172638633520, guid: 83143cf1b37b64e479b58539bb58b9d0,
-    type: 3}
-  Damage: 1
-  Cooldoun: 1
-  Cost: 1
+  name: 123
+  WeaponModel: {fileID: 0}
+  Damage: 100
+  Cooldoun: 3
+  Cost: 20

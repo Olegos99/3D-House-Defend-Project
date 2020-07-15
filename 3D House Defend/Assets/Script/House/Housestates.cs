@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Housestates : MonoBehaviour
 {
-    [Range(10f, 100f)]
+    [Range(10f, 500f)]
     public int MaxHealth;
 
     public int CurrentHealth;

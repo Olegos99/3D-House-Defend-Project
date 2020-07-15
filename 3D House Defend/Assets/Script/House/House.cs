@@ -15,7 +15,7 @@ public class House : MonoBehaviour
 
     #endregion
 
-    public GameObject _House;
+    public GameObject _HouseGameObject;
 
 
 

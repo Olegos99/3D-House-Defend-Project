@@ -5,11 +5,12 @@ using UnityEngine.AI;
 
 public class MelleAIEnemyController : MonoBehaviour
 {
-    public int AttackDamage = 2;
+    public int AttackDamage;
     public float AttackRate = 0.5f;
 
     public float lookRadius = 10f;
     public float AttackRadius = 1.5f;
+    public float AttackRadiusForHouse = 8.5f;
 
     public bool AttackingNow = false;
 
@@ -32,8 +33,9 @@ public class MelleAIEnemyController : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         PlayerTransform = PlayerManager.instance.Player.transform;
-        HouseTransform = House.instance._House.transform;
+        HouseTransform = House.instance._HouseGameObject.transform;
         Anim = GetComponentInChildren<Animator>();
+        AttackDamage = GetComponent<EnemyStats>().GetEnemyDamage();
     }
 
 
@@ -52,7 +54,7 @@ public class MelleAIEnemyController : MonoBehaviour
 
         float distance = Vector3.Distance(CurrentTarget.position, transform.position);
 
-        if (distance <= AttackRadius)
+        if(CurrentTarget == HouseTransform && distance <= AttackRadiusForHouse) //target point is inside the house (So needed solution to make enemyes attack house)
         {
             if (Time.time >= TimeToNextAttack)
             {
@@ -61,6 +63,14 @@ public class MelleAIEnemyController : MonoBehaviour
             }
         }
 
+        if (distance <= AttackRadius)
+        {
+            if (Time.time >= TimeToNextAttack)
+            {
+                Attack();
+                TimeToNextAttack = Time.time + 1f / AttackRate;
+            }
+        }
         agent.SetDestination(CurrentTarget.position);
     }
 
@@ -76,6 +86,10 @@ public class MelleAIEnemyController : MonoBehaviour
             {
                 Enemy.gameObject.GetComponent<PlayerStats>().ResiveDamage(AttackDamage);
             }
+            if (Enemy.gameObject.tag == "House")
+            {
+                Enemy.gameObject.GetComponentInChildren<Housestates>().ResiveDamage(AttackDamage);
+            }
         }
         //StartCoroutine("Attacking");
     }
@@ -86,6 +100,8 @@ public class MelleAIEnemyController : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, lookRadius);
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, AttackRadius);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, AttackRadiusForHouse);
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(AttackPoint.position, AttackRange);
     }

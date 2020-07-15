@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//MAY BE NO NEED IN THIS SCRIPT
+
 public class Weapon : MonoBehaviour
 {
     [Range(1, 10)]
@@ -37,7 +39,7 @@ public class Weapon : MonoBehaviour
                 StartCoroutine(WhaitTillNextDamageDelivery(attackTime));
             }
             Debug.Log("Enemy hitted");
-            this.GetComponentInParent<PlayerAttacks>().DeliverDamage(collision.gameObject);         
+            this.GetComponentInParent<PlayerAttacks>().DeliverMelleDamage(collision.gameObject);         
         }
     }
 

@@ -9,14 +9,18 @@ public class EnemyStats : MonoBehaviour
 
     public int CurrentHealth;
     [Range(1, 10)]
-    public int EnemyDamage = 2;
 
-    public GameObject Weapon;
+    [SerializeField]
+    private int EnemyDamage = 2;
 
     public void Start()
     {
-        CurrentHealth = MaxHealth;
-       // Weapon.GetComponentInChildren<EnemyWeapon>().WeaponDamage = EnemyDamage;
+        CurrentHealth = MaxHealth;      
+    }
+
+    public int GetEnemyDamage()
+    {
+        return EnemyDamage;
     }
 
     public void ResiveDamage(int Amount)
@@ -31,6 +35,7 @@ public class EnemyStats : MonoBehaviour
             Death();
         }
     }
+
     private void Death()
     {
         Destroy(this.gameObject);

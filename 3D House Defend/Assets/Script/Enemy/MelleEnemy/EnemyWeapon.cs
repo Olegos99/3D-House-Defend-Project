@@ -1,14 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+//MAY BE NO NEED IN THIS SCRIPT
 public class EnemyWeapon : MonoBehaviour
 {
-    public int WeaponDamage;
+    public int WeaponDamage; 
 
     private void OnCollisionEnter(Collision collision)
     {
-        WeaponDamage = GetComponentInParent<EnemyStats>().EnemyDamage;
+        WeaponDamage = GetComponentInParent<EnemyStats>().GetEnemyDamage();
         if (collision.gameObject.tag == "Player")
         {
             collision.gameObject.GetComponentInChildren<PlayerStats>().ResiveDamage(WeaponDamage);
