@@ -7,6 +7,7 @@ public class WeaponScriptableObj : ScriptableObject
 {
     public new string name;
     public GameObject WeaponModel;
+    public bool IsMelleWeapon;
     public int Damage;
     public float Cooldoun;
     public int Cost;

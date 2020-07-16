@@ -15,20 +15,21 @@ public class PlayerAttacks : MonoBehaviour
     public float AttackRate = 0.5f;
     float TimeToNextAttack = 0f;
 
-    public WeaponScriptableObj[] WeaponsInInventory;
-    public WeaponScriptableObj CurrentWeapon;
+
+    PlayerWeaponManager PlayerWeaponManager;
+
+    private int PlayerMelleDamage;
+    private int PlayerRangeDamage;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        if (WeaponsInInventory[0] != null)
-        {
-            CurrentWeapon = WeaponsInInventory[0];
-        }
-        else
-            CurrentWeapon = null;
+        PlayerWeaponManager = GetComponent<PlayerWeaponManager>();
+
         Anim = GetComponentInChildren<Animator>();
+        PlayerMelleDamage = GetComponentInParent<PlayerStats>().MelleAttackPower;
+        PlayerRangeDamage = GetComponentInParent<PlayerStats>().RangeAttackPower;
     }
 
     // Update is called once per frame
@@ -38,15 +39,15 @@ public class PlayerAttacks : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                Attack();
-                TimeToNextAttack = Time.time + 1f /*/ AttackRate*/;
+                MelleAttack();
+                TimeToNextAttack = Time.time + PlayerWeaponManager.CurrentWeapon.Cooldoun;
             }
         }
         m_CurrentClipInfo = this.Anim.GetCurrentAnimatorClipInfo(0);
         m_ClipName = m_CurrentClipInfo[0].clip.name;
     }
 
-    private void Attack()
+    private void MelleAttack()
     {
         Debug.Log("Attacking");
         Anim.SetTrigger("Attack");
@@ -54,7 +55,7 @@ public class PlayerAttacks : MonoBehaviour
         foreach (Collider Enemy in HitedEnemies)
         {
             Debug.Log("Hited" + Enemy.name);
-            DeliverMelleDamage(Enemy.gameObject);
+            DeliverDamage(Enemy.gameObject, true);//currently only melle damage
         }
         //StartCoroutine("Attacking");
 
@@ -62,8 +63,7 @@ public class PlayerAttacks : MonoBehaviour
 
     void OnGUI()
     {
-        //Output the current Animation name and length to the screen
-        GUI.Label(new Rect(0, 0, 200, 20), "Clip Name : " + m_ClipName);
+        GUI.Label(new Rect(0, 0, 200, 20), "Clip Name : " + m_ClipName);        //Output the current Animation name and length to the screen
     }
 
     //IEnumerator Attacking()
@@ -81,12 +81,22 @@ public class PlayerAttacks : MonoBehaviour
     //    yield return new WaitForSeconds(0.1f);
     //}
 
-    public void DeliverMelleDamage(GameObject target)
+    public void DeliverDamage(GameObject target, bool IsMelleDamage)
     {
-        int ActualDamage = GetComponentInParent<PlayerStats>().MelleAttackPower + CurrentWeapon.Damage;
+        int ActualDamage = PlayerWeaponManager.CurrentWeapon.Damage;
+        if (IsMelleDamage)
+        {
+            ActualDamage += PlayerMelleDamage;
+        }
+        else
+        {
+            ActualDamage += PlayerRangeDamage;
+        }
+
         target.GetComponentInParent<EnemyStats>().ResiveDamage(ActualDamage);
         Debug.Log("Delivered " + ActualDamage + " damage to " + target.name);
     }
+
 
     private void OnDrawGizmos() //draw helpful thing in the Sceene
     {

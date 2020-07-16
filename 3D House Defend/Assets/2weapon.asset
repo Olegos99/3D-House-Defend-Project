@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: 2weapon
   m_EditorClassIdentifier: 
   name: 123
-  WeaponModel: {fileID: 0}
+  WeaponModel: {fileID: 5381961172638633520, guid: 83143cf1b37b64e479b58539bb58b9d0,
+    type: 3}
+  IsMelleWeapon: 1
   Damage: 100
   Cooldoun: 3
   Cost: 20

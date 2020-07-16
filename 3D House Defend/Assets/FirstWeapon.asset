@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: FirstWeapon
   m_EditorClassIdentifier: 
   name: palka
-  WeaponModel: {fileID: 5381961172638633520, guid: 83143cf1b37b64e479b58539bb58b9d0,
+  WeaponModel: {fileID: 8038980291269683923, guid: 4d288427d57440744b87d4520ee2ef30,
     type: 3}
+  IsMelleWeapon: 1
   Damage: 1
-  Cooldoun: 1
+  Cooldoun: 0.5
   Cost: 1

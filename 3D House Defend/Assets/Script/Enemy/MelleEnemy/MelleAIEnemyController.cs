@@ -82,11 +82,13 @@ public class MelleAIEnemyController : MonoBehaviour
         Collider[] HitedEnemies = Physics.OverlapSphere(AttackPoint.position, AttackRange);
         foreach (Collider Enemy in HitedEnemies)
         {
-            if(Enemy.gameObject.name == "Player")
+            //if(Enemy.gameObject.name == "Player")
+            if (Enemy.gameObject.GetComponent<PlayerManager>())
             {
                 Enemy.gameObject.GetComponent<PlayerStats>().ResiveDamage(AttackDamage);
             }
-            if (Enemy.gameObject.tag == "House")
+            //if (Enemy.gameObject.tag == "House")
+            if (Enemy.gameObject.GetComponent<Housestates>())
             {
                 Enemy.gameObject.GetComponentInChildren<Housestates>().ResiveDamage(AttackDamage);
             }

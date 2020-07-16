@@ -39,7 +39,7 @@ public class Weapon : MonoBehaviour
                 StartCoroutine(WhaitTillNextDamageDelivery(attackTime));
             }
             Debug.Log("Enemy hitted");
-            this.GetComponentInParent<PlayerAttacks>().DeliverMelleDamage(collision.gameObject);         
+            this.GetComponentInParent<PlayerAttacks>().DeliverDamage(collision.gameObject, true);         
         }
     }
 
