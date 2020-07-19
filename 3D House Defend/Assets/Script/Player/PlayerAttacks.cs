@@ -15,6 +15,7 @@ public class PlayerAttacks : MonoBehaviour
     public float AttackRate = 0.5f;
     float TimeToNextAttack = 0f;
 
+    public Collider[] HitedEnemies;
 
     PlayerWeaponManager PlayerWeaponManager;
 
@@ -50,14 +51,18 @@ public class PlayerAttacks : MonoBehaviour
     private void MelleAttack()
     {
         Debug.Log("Attacking");
+
+
         Anim.SetTrigger("Attack");
+
         Collider[] HitedEnemies = Physics.OverlapSphere(AttackPoint.position, AttackRange, EnemyLayers);
         foreach (Collider Enemy in HitedEnemies)
         {
             Debug.Log("Hited" + Enemy.name);
             DeliverDamage(Enemy.gameObject, true);//currently only melle damage
         }
-        //StartCoroutine("Attacking");
+
+        // StartCoroutine("Attacking");
 
     }
 
@@ -68,17 +73,17 @@ public class PlayerAttacks : MonoBehaviour
 
     //IEnumerator Attacking()
     //{
-    //    while(m_CurrentClipInfo[0].clip.name == "Attack")
+    //    while (m_CurrentClipInfo[0].clip.name == "Attack")
     //    {
     //        HitedEnemies = Physics.OverlapSphere(AttackPoint.position, AttackRange, EnemyLayers);
-    //        foreach (Collider Enemy in HitedEnemies)
-    //        {
-    //            Debug.Log("Hited" + Enemy.name);
-    //            DeliverDamage(Enemy.gameObject);
-    //        }
-    //        yield return null;
+    //        yield return new WaitForFixedUpdate();
     //    }
-    //    yield return new WaitForSeconds(0.1f);
+    //    foreach (Collider Enemy in HitedEnemies)
+    //    {
+    //        Debug.Log("Hited" + Enemy.name);
+    //        DeliverDamage(Enemy.gameObject, true);
+    //    }
+        
     //}
 
     public void DeliverDamage(GameObject target, bool IsMelleDamage)
