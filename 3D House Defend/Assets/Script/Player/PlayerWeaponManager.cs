@@ -8,7 +8,7 @@ public class PlayerWeaponManager : MonoBehaviour
 
     public WeaponScriptableObj[] WeaponsInInventory;
     public WeaponScriptableObj CurrentWeapon;
-    private GameObject CurrentWeaponModel;
+    private GameObject CurrentWeaponGameObject;
 
     private void Start()
     {
@@ -38,9 +38,9 @@ public class PlayerWeaponManager : MonoBehaviour
     private void SetWeapon(int WeaponIndex)
     {
         CurrentWeapon = WeaponsInInventory[WeaponIndex - 1];
-        Destroy(CurrentWeaponModel);
-        CurrentWeaponModel = Instantiate(CurrentWeapon.WeaponModel) as GameObject;
-        CurrentWeaponModel.transform.SetParent(WeaponPlace, false);
+        Destroy(CurrentWeaponGameObject);
+        CurrentWeaponGameObject = Instantiate(CurrentWeapon.WeaponGameObject) as GameObject;
+        CurrentWeaponGameObject.transform.SetParent(WeaponPlace, false);
     }
 
     private void Update()

@@ -8,6 +8,13 @@ public class MovementControl : MonoBehaviour
 {
     public CharacterController Controller;
 
+    public bool isGrounded;
+    public bool isMoving;
+
+    public bool AllowMovment = true;
+    public bool FreezeMovmentCoorutineIsStarted = false;
+
+
     [Range(5f, 30f)]
     public float speed = 5f;
 
@@ -21,7 +28,7 @@ public class MovementControl : MonoBehaviour
     public LayerMask groundMask;
 
     Vector3 velocity;
-    private bool isGrounded;
+
 
     public bool Movment2D;
     public bool Movment3D;
@@ -33,6 +40,8 @@ public class MovementControl : MonoBehaviour
 
     bool jumpedOnce = false;
     bool jumpedTwice = false;
+
+
 
 
     //public bool WASDmovement;
@@ -48,60 +57,84 @@ public class MovementControl : MonoBehaviour
 
     void Update()
     {
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask); //creatind invisible sphere to check if it touching the "groundMask" layer
-
-        if(isGrounded && velocity.y < 0) // to avoid adding forse vector every frame while grounded
+        if (AllowMovment)
         {
-            velocity.y = -2f;
-        }
+            isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask); //creatind invisible sphere to check if it touching the "groundMask" layer
 
-        float x = Input.GetAxis("Horizontal");//multiplatform input recive
-        float z = Input.GetAxis("Vertical");
-
-        Vector3 move;
-
-        if (Movment3D)
-        {
-             move = transform.right * x + transform.forward * z;
-        }
-        else
-        {
-            move = transform.right * x;
-        }
-
-        Controller.Move(move * speed * Time.deltaTime);//main movement vector
-
-
-        if (DoubleJump)
-        {
-
-            if (Input.GetButtonDown("Jump") && isGrounded)
+            if (isGrounded && velocity.y < 0) // to avoid adding forse vector every frame while grounded
             {
-                velocity.y += Mathf.Sqrt(jumpHeight * -2f * gravity);
-                StartCoroutine("WhaitBeforeNextJump");
+                velocity.y = -2f;
             }
-            if (Input.GetButtonDown("Jump") && jumpedOnce && !jumpedTwice)
-            {
-                velocity.y += Mathf.Sqrt(jumpHeight * -2f * gravity);
-                jumpedTwice = true;
-            }
-            if(isGrounded)
-            {
-               jumpedOnce = false;
-               jumpedTwice = false;
-            }
-        }
-        else
-        {
-            if (Input.GetButtonDown("Jump") && isGrounded)
-            {
-                velocity.y += Mathf.Sqrt(jumpHeight * -2f * gravity);
-            }
-        }
 
-            velocity.y += gravity * Time.deltaTime; //adding velocity to axis y (gravity)
-            Controller.Move(velocity * Time.deltaTime); //acceleration a = f * (time^2)
+            float x = Input.GetAxis("Horizontal");//multiplatform input recive
+            float z = Input.GetAxis("Vertical");
+
+            Vector3 move;
+
+            if (Movment3D)
+            {
+                move = transform.right * x + transform.forward * z;
+            }
+            else
+            {
+                move = transform.right * x;
+            }
+
+
+
+            Controller.Move(move * speed * Time.deltaTime);//main movement vector
+            if (Controller.velocity != new Vector3(0,0,0))
+            {
+                isMoving = true;
+            }
+            else 
+            {
+                isMoving = false;
+            }
+
+            
+
+            if (DoubleJump)
+            {
+
+                if (Input.GetButtonDown("Jump") && isGrounded)
+                {
+                    velocity.y += Mathf.Sqrt(jumpHeight * -2f * gravity);
+                    StartCoroutine("WhaitBeforeNextJump");
+                }
+                if (Input.GetButtonDown("Jump") && jumpedOnce && !jumpedTwice)
+                {
+                    velocity.y += Mathf.Sqrt(jumpHeight * -2f * gravity);
+                    jumpedTwice = true;
+                }
+                if (isGrounded)
+                {
+                    jumpedOnce = false;
+                    jumpedTwice = false;
+                }
+            }
+            else
+            {
+                if (Input.GetButtonDown("Jump") && isGrounded)
+                {
+                    velocity.y += Mathf.Sqrt(jumpHeight * -2f * gravity);
+                }
+            }
+
+
+                velocity.y += gravity * Time.deltaTime; //adding velocity to axis y (gravity)
+                Controller.Move(velocity * Time.deltaTime); //acceleration a = f * (time^2)           
+        }
         
+    }
+
+    public IEnumerator FreezeMovement(float SomeTime)
+    {
+        FreezeMovmentCoorutineIsStarted = true;
+        AllowMovment = false;
+        yield return new WaitForSeconds(SomeTime);
+        AllowMovment = true;
+        FreezeMovmentCoorutineIsStarted = false;
     }
 
     IEnumerator WhaitBeforeNextJump()

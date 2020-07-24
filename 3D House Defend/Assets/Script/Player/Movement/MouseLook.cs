@@ -8,25 +8,57 @@ public class MouseLook : MonoBehaviour
     public float MouseSensitivity = 100f;
 
     public Transform PlayerBody;
+    MovementControl movementControl;
 
     float xRotation = 0f;
+    float yRotation = 0f;
+
+    public bool EnableMouseRotation = true;
+    public bool CameraFreeezeCoorutineIsStarted = false;
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked; //lock cursor add keep it invisible(Esc to see it again)
+        movementControl = GetComponentInParent<MovementControl>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        float MouseX = Input.GetAxis("Mouse X") * MouseSensitivity * Time.deltaTime;
-        float MouseY = Input.GetAxis("Mouse Y") * MouseSensitivity * Time.deltaTime;
+        //if (EnableMouseRotation)
+        //{
+            float MouseX = Input.GetAxis("Mouse X") * MouseSensitivity * Time.deltaTime;
+            float MouseY = Input.GetAxis("Mouse Y") * MouseSensitivity * Time.deltaTime;
 
-        xRotation -= MouseY;
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+            xRotation -= MouseY;
+            xRotation = Mathf.Clamp(xRotation, -45f, 20f);
 
-        transform.localRotation = Quaternion.Euler(xRotation, 0f,0f);
-        PlayerBody.Rotate(Vector3.up * MouseX);
+        //yRotation += MouseX;
+
+
+        if (EnableMouseRotation)
+        {
+            transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+
+
+            //if (movementControl.isMoving) // if make camera move around player while not moving this lines will apply player body rotation to veiw
+            //{
+                PlayerBody.Rotate(Vector3.up * MouseX);
+            //}
+        }
     }
+
+    public IEnumerator FreezeMouseRotation(float SomeTime)
+    {
+        CameraFreeezeCoorutineIsStarted = true;
+        EnableMouseRotation = false;
+        yield return new WaitForSeconds(SomeTime);
+        EnableMouseRotation = true;
+        CameraFreeezeCoorutineIsStarted = false;
+    }
+//    public void FreezeMouseRotation()
+//    {
+//        EnableMouseRotation = false;
+//    }
 }
 /*
 6. Tracking: This camera tracks the doll along a pre-defined line in 3D space.
