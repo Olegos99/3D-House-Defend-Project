@@ -17,29 +17,49 @@ public class PlayerAttacks2 : MonoBehaviour
     //public Collider[] HitedEnemies;
 
     PlayerWeaponManager playerWeaponManager;
+
     public MouseLook mouseLook;
     MovementControl movementControl;
+
+    ThirdPersonMovement thirdPersonMovement;
+    CameraMovement cameraMovement;
 
     private int PlayerMelleDamage;
     private int PlayerRangeDamage;
 
+    public int CurentMovmentSystem;
 
     // Start is called before the first frame update
     void Start()
     {
         playerWeaponManager = GetComponent<PlayerWeaponManager>();
+
         mouseLook = GetComponentInChildren<MouseLook>();
         movementControl = GetComponent<MovementControl>();
+
+        thirdPersonMovement = GetComponentInParent<ThirdPersonMovement>();
+        cameraMovement = GetComponentInChildren<CameraMovement>();
 
         Anim = GetComponentInChildren<Animator>();
         PlayerMelleDamage = GetComponentInParent<PlayerStats>().MelleAttackPower;
         PlayerRangeDamage = GetComponentInParent<PlayerStats>().RangeAttackPower;
+
+
+        if(mouseLook == null && movementControl == null)
+        {
+            CurentMovmentSystem = 1;
+        }
+        else
+        {
+            CurentMovmentSystem = 2;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
         if(Time.time >= TimeToNextAttack && movementControl.isGrounded)
+        //if (Time.time >= TimeToNextAttack && thirdPersonMovement.isGrounded)
         {
             if (Input.GetMouseButtonDown(0))
             {
@@ -50,10 +70,25 @@ public class PlayerAttacks2 : MonoBehaviour
 
         m_CurrentClipInfo = this.Anim.GetCurrentAnimatorClipInfo(0);
         m_ClipName = m_CurrentClipInfo[0].clip.name;
+
         if (isAttackingNow && !mouseLook.CameraFreeezeCoorutineIsStarted)
+        //if (isAttackingNow && !cameraMovement.CameraFreeezeCoorutineIsStarted)
         {
-            StartCoroutine(mouseLook.FreezeMouseRotation(m_CurrentClipInfo[0].clip.length));
-            StartCoroutine(movementControl.FreezeMovement(m_CurrentClipInfo[0].clip.length));
+            switch (CurentMovmentSystem)
+            {
+                case 1:
+                    StartCoroutine(cameraMovement.FreezeMouseRotation(m_CurrentClipInfo[0].clip.length));
+                    StartCoroutine(thirdPersonMovement.FreezeMovement(m_CurrentClipInfo[0].clip.length));
+                    break;
+                case 2:
+                    StartCoroutine(mouseLook.FreezeMouseRotation(m_CurrentClipInfo[0].clip.length));
+                    StartCoroutine(movementControl.FreezeMovement(m_CurrentClipInfo[0].clip.length));
+                    break;
+                default:
+                    StartCoroutine(mouseLook.FreezeMouseRotation(m_CurrentClipInfo[0].clip.length));
+                    StartCoroutine(movementControl.FreezeMovement(m_CurrentClipInfo[0].clip.length));
+                    break;
+            }     
         }
     }
 

@@ -83,6 +83,7 @@ public class MovementControl : MonoBehaviour
 
 
             Controller.Move(move * speed * Time.deltaTime);//main movement vector
+
             if (Controller.velocity != new Vector3(0,0,0))
             {
                 isMoving = true;
