@@ -198,13 +198,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4768930658318865669}
-  m_LocalRotation: {x: 0.161915, y: -0, z: -0, w: 0.9868047}
-  m_LocalPosition: {x: 0, y: 2.6999998, z: -6.3999977}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.19, z: -6.3999977}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7278920077834635693}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 18.636002, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &4768930658318865691
 Camera:
   m_ObjectHideFlags: 0
@@ -268,12 +268,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b0c963bb7b0bed4db0c359850ebb3b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MouseSensitivity: 120
+  MouseSensitivity: 1
   PlayerBody: {fileID: 4768930658720627819}
   Target: {fileID: 7278920077834635693}
+  CameraDistancecontroller: 5
   smoth: 500
   EnableMouseRotation: 1
   CameraFreeezeCoorutineIsStarted: 0
+  DesiredDistanceFromTarget: 0
+  MovingCameraPosition: {fileID: 7115622067188681085}
+  smoothTime: 0.3
 --- !u!1 &4768930658467247571
 GameObject:
   m_ObjectHideFlags: 0
@@ -501,6 +505,7 @@ Transform:
   - {fileID: 6797602358919485296}
   - {fileID: 9064817380445430019}
   - {fileID: 7278920077834635693}
+  - {fileID: 7115622067188681085}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -637,6 +642,7 @@ MonoBehaviour:
   isAttackingNow: 0
   AttackRate: 0.5
   mouseLook: {fileID: 0}
+  CurentMovmentSystem: 0
 --- !u!1 &6105039317738513179
 GameObject:
   m_ObjectHideFlags: 0
@@ -667,4 +673,34 @@ Transform:
   - {fileID: 4768930658318865690}
   m_Father: {fileID: 4768930658720627819}
   m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8018567376057416384
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7115622067188681085}
+  m_Layer: 0
+  m_Name: MovingCameraPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7115622067188681085
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8018567376057416384}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.48, z: -6.3999977}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4768930658720627819}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
