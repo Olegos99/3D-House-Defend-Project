@@ -78,15 +78,15 @@ public class PlayerAttacks2 : MonoBehaviour
             {
                 case 1:
                     StartCoroutine(cameraMovement.FreezeMouseRotation(m_CurrentClipInfo[0].clip.length));
-                    StartCoroutine(thirdPersonMovement.FreezeMovement(m_CurrentClipInfo[0].clip.length));
+                    //StartCoroutine(thirdPersonMovement.FreezeMovement(m_CurrentClipInfo[0].clip.length));
                     break;
                 case 2:
                     StartCoroutine(mouseLook.FreezeMouseRotation(m_CurrentClipInfo[0].clip.length));
-                    StartCoroutine(movementControl.FreezeMovement(m_CurrentClipInfo[0].clip.length));
+                    //StartCoroutine(movementControl.FreezeMovement(m_CurrentClipInfo[0].clip.length));
                     break;
                 default:
                     StartCoroutine(mouseLook.FreezeMouseRotation(m_CurrentClipInfo[0].clip.length));
-                    StartCoroutine(movementControl.FreezeMovement(m_CurrentClipInfo[0].clip.length));
+                    //StartCoroutine(movementControl.FreezeMovement(m_CurrentClipInfo[0].clip.length));
                     break;
             }     
         }

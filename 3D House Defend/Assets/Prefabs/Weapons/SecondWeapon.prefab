@@ -107,6 +107,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 131adfe7837b53f478a84a95c265d9ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ThisWeaponAttackingCollider: {fileID: 8567542375609708661}
   PA2: {fileID: 0}
 --- !u!1 &8041061677037334146
 GameObject:

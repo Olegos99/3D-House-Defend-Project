@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
+    public Collider ThisWeaponAttackingCollider;
     public PlayerAttacks2 PA2;
 
     private void Start()
@@ -14,16 +15,25 @@ public class Weapon : MonoBehaviour
 
     private void Update()
     {
-        if(PA2 == null)
+        
+        if (PA2 == null)
         {
             PA2 = this.gameObject.GetComponentInParent<PlayerAttacks2>();
         }
+
+        if (PA2 && PA2.isAttackingNow)
+        {
+            ThisWeaponAttackingCollider.enabled = true;
+        }
+        else
+            ThisWeaponAttackingCollider.enabled = false;
     }
     public void OnTriggerEnter(Collider other)
     {
         Debug.Log("Weapon collided " + other.gameObject.name);
         //if (PA2.m_ClipName == "Attack")
-        if (PA2.isAttackingNow)
+
+        if (PA2 && PA2.isAttackingNow)
         {            
             if (other.gameObject.GetComponentInParent<EnemyStats>())//was bug with one shoot kills (because on 1 animation was more than one collision)
             {

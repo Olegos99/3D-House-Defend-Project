@@ -33,7 +33,7 @@ public class PlayerStats : MonoBehaviour
 
     public void ResiveDamage(int Amount)
     {
-        int ActualDamageRecive = Amount - Armor;
+        int ActualDamageRecive = Amount - CurrentArmor;
         if (ActualDamageRecive > 0)
         {
             CurrentHealth -= ActualDamageRecive;
