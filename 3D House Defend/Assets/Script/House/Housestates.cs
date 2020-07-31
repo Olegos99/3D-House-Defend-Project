@@ -9,6 +9,8 @@ public class Housestates : MonoBehaviour
 
     public int CurrentHealth;
 
+    public UIManager uiManager;
+
     private void Awake()
     {
         CurrentHealth = MaxHealth;
@@ -21,6 +23,7 @@ public class Housestates : MonoBehaviour
         if (ActualDamageRecive > 0)
         {
             CurrentHealth -= ActualDamageRecive;
+            uiManager.HouseHealthsBar.SetUIHealth(CurrentHealth, MaxHealth);
         }
         else
             return;

@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public class HealthBar : MonoBehaviour
 {
     public GameObject Owner;
-    public Image image1;
-    public Image image2;
+    public Image HealthImage;
+    public Image BackGround;
     public Canvas canvas;
 
     private float CurrentHealth;
@@ -21,8 +21,6 @@ public class HealthBar : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       
-
         canvas = GetComponentInChildren<Canvas>();
         canvas.worldCamera = PlayerManager.instance.Player.GetComponentInChildren<Camera>();
         Player = PlayerManager.instance.Player.transform;
@@ -60,6 +58,6 @@ public class HealthBar : MonoBehaviour
             CurrentHealth = Owner.GetComponentInChildren<EnemyStats>().CurrentHealth;
         }
         float num = (CurrentHealth / MaxHealth);
-        image1.fillAmount = (num);
+        HealthImage.fillAmount = (num);
     }
 }

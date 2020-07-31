@@ -45,8 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Owner: {fileID: 0}
-  image1: {fileID: 3114890239693730290}
-  image2: {fileID: 7112414540117313706}
+  HealthImage: {fileID: 3114890239693730290}
+  BackGround: {fileID: 7112414540117313706}
   canvas: {fileID: 0}
   targetPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &1161716625809515551
